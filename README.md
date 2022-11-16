@@ -5,7 +5,7 @@
 - Create a new conda environment with python3.7.9 called mediapipe\
   `conda create -n mediapipe python=3.7.9`
 - Add python3 path in bashrc\
-  `echo "export PATH="/home/${user_name}/anaconda3/envs/mediapipe/bin"" >> ~/.bashrc`
+  `echo "export PATH="/home/${user_name}/anaconda3/envs/mediapipe/bin:$PATH"" >> ~/.bashrc`
 - Install mediapipe, catkin-tools and rospkg in mediapipe environment\
   `pip install mediapipe`\
   `pip install catkin-tools`\
