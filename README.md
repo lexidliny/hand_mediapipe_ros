@@ -15,12 +15,14 @@
 - Install dependence\
   `pip install rosdep rosinstall catkin_pkg rospkg numpy pyyaml opencv-python`
 - Init a catkin workspace for build cv_brige called ros_cv_bridge\
-  `mkdir -p ros_cv_bridge/src && cd ros_cv_bridge/src`\
-  `catkin_init_workspace`\
-  `git clone https://gitee.com/irvingao/vision_opencv.git`\
-  `cd ../`\
-  `export CPLUS_INCLUDE_PATH=/home/${user_name}/anaconda3/include/python3.7m`\
-  `catkin_make install -DCMAKE_BUILD_TYPE=Release -DSETUPTOOLS_DEB_LAYOUT=OFF -DPYTHON_EXECUTABLE=/home/${user_name}/anaconda3/bin/python`
+  ```
+  mkdir -p ros_cv_bridge/src && cd ros_cv_bridge/src
+  catkin_init_workspace
+  git clone https://gitee.com/irvingao/vision_opencv.git
+  cd ../
+  export CPLUS_INCLUDE_PATH=/home/${user_name}/anaconda3/include/python3.7m
+  catkin_make install -DCMAKE_BUILD_TYPE=Release -DSETUPTOOLS_DEB_LAYOUT=OFF -DPYTHON_EXECUTABLE=/home/${user_name}/anaconda3/bin/python
+  ```
 - Add the cv_brige to bashrc\
   `echo "source ~/ros_cv_bridge/install/setup.bash --extend" >> ~/.bashrc`
 ## build
