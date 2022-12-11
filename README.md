@@ -24,4 +24,4 @@
 - Add the cv_brige to bashrc\
   `echo "source ~/ros_cv_bridge/install/setup.bash --extend" >> ~/.bashrc`
 ## build
-`catkin_make -DPYTHON_EXECUTABLE=/home//${user_name}/anaconda3/bin/python`
+`catkin_make -DPYTHON_EXECUTABLE=/home/${user_name}/anaconda3/bin/python`
