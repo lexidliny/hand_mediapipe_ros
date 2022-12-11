@@ -7,18 +7,18 @@
 #include <iostream>
 
 
-class PoseServer
+class PalmPoseServer
 {
   private:
   ros::NodeHandle n;
   ros::ServiceClient client = n.serviceClient<hand_mediapipe::LandmarkPoint>("/my_gen3/landmark_server");
-  ros::ServiceServer service = n.advertiseService("fingertip_pose_server", &PoseServer::get_fingertip_pose, this);
+  ros::ServiceServer service = n.advertiseService("/my_gen3/palm_pose_server", &PalmPoseServer::get_palm_pose, this);
 
   public:
-  PoseServer(){}
-  PoseServer(ros::NodeHandle nh):n(nh){}
+  PalmPoseServer(){}
+  PalmPoseServer(ros::NodeHandle nh):n(nh){}
 
-  bool get_fingertip_pose(hand_mediapipe::FingerTipPoseRequest &req, hand_mediapipe::FingerTipPoseResponse &res)
+  bool get_palm_pose(hand_mediapipe::FingerTipPoseRequest &req, hand_mediapipe::FingerTipPoseResponse &res)
   {
     hand_mediapipe::LandmarkPoint srv;
 
@@ -46,9 +46,9 @@ class PoseServer
     ny_homo = {ny[0]/ny_mode, ny[1]/ny_mode, ny[2]/ny_mode, 0};
     nz_homo = {nz[0]/nz_mode, nz[1]/nz_mode, nz[2]/nz_mode, 0};
 
-    t_homo[0] = landmark_points[0].x - nz[0] * 0.02 - ny[0] * 0.002;
-    t_homo[1] = landmark_points[0].y - nz[1] * 0.02 - ny[1] * 0.002;
-    t_homo[2] = landmark_points[0].z - nz[2] * 0.02 - ny[2] * 0.002;
+    t_homo[0] = landmark_points[2].x - nz[0] * 0.2;
+    t_homo[1] = landmark_points[2].y - nz[1] * 0.2;
+    t_homo[2] = landmark_points[0].z - nz[2] * 0.2;
     t_homo[3] = 1.;
     // t_homo[0] = landmark_points[0].x;
     // t_homo[1] = landmark_points[0].y;
@@ -169,7 +169,7 @@ class PoseServer
     ee2caixuezhen_tf.setRotation(ee2caixuezhen.getRotation());
 
     target2root_tf.mult(realsense2root_tf,target2realsense_tf);
-    ee2root_tf.mult(target2root_tf, ee2caixuezhen_tf);
+    ee2root_tf.mult(target2root_tf, ee2realsense_tf);
 
 
     res.pose.position.x = ee2root_tf.getOrigin().x();
@@ -197,7 +197,7 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "fingertip_pose_server_node");
   ros::NodeHandle n;
-  PoseServer server = PoseServer(n);
+  PalmPoseServer server = PalmPoseServer(n);
 
   ros::spin();
   return 0;
